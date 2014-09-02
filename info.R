@@ -1,0 +1,5 @@
+name = "Joseph Simonian"
+SID = "24286568"
+email = "jsimonian@berkeley.edu"
+github_name = "jsimonian"
+status = "enrolled"
