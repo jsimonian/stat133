@@ -9,7 +9,6 @@
 # 2.
 # two.plus.two <- your code here
 two.plus.two <- 2 + 2
-potato = 3.14159
 
 # You may leave the "# two.plus.two <- your code here" line in your file or
 # delete it. Since the line is commented out, it will not be run as part of your
@@ -21,14 +20,13 @@ potato = 3.14159
 # command: ls() or objects().
 # Good Luck!
 
-
 # Included in your hw1 directory, you will find the file "ex1-data.csv". Please
 # load in this data and store it as a variable named <ex1.data>. Set the header
 # argument to TRUE when reading in the csv.
 
 # ex1.data <- your code here
 
-print("I'm a potato")
+
 
 # The data you just loaded is stored as a data frame object. Your data frame
 # should have one column with the name "x". You can extract a column from a data
