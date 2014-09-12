@@ -5,5 +5,19 @@
     "email": "jsimonian@berkeley.edu", 
     "github_name": "jsimonian", 
     "status": "enrolled", 
-    "grades": {}
+    "grades": {
+        "hw1": {
+            "note": "", 
+            "hash": "ee42f8fd8dcc44a2454757e9648e1be4b4d12e59", 
+            "earned": 13, 
+            "possible": 14, 
+            "penalty": 0, 
+            "parts": {
+                "ex1": {
+                    "possible": 14, 
+                    "earned": 13
+                }
+            }
+        }
+    }
 }
