@@ -51,7 +51,7 @@ data.class = class(ex1.data.v)
 # vector <ex1.data.v>.
 
 # n.ex1.data <- your code here
-n.ex1.data.v = length(ex1.data.v)
+n.ex1.data = length(ex1.data.v)
 
 
 # calulate the mean of <ex1.data.v>. Store this as the variable
