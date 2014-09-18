@@ -8,14 +8,14 @@
     "grades": {
         "hw1": {
             "note": "", 
-            "hash": "ee42f8fd8dcc44a2454757e9648e1be4b4d12e59", 
-            "earned": 13, 
+            "hash": "8e85e050f688f06489d03301ca2de2b7634d76c2", 
+            "earned": 14, 
             "possible": 14, 
             "penalty": 0, 
             "parts": {
                 "ex1": {
                     "possible": 14, 
-                    "earned": 13
+                    "earned": 14
                 }
             }
         }
