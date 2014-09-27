@@ -65,7 +65,7 @@ n.wr <- length(unique(wr1500m$times))
 
 # Q1b. Use R commands to find out who currently holds the world
 # record in the men's 1500 meter.
- 
+
 # wr.name <- your code here
 wr.name <- wr1500m$athlete[wr1500m$times == min(wr1500m$times)]
 
@@ -295,9 +295,9 @@ display.brewer.all()
 brewer.pal(10, "YlOrRd")
 # myGold <- your selected color
 myGold <- #FEB24CAA
-
-#world <- your code here
-world <- map(fill = TRUE, col = "gray")
+  
+  #world <- your code here
+  world <- map(fill = TRUE, col = "gray")
 #symbols( your code here )
 symbols(wonMedal$longitude, wonMedal$latitude, circles = sqrt(wonmedal$Total)/3, inches = FALSE, add = T, fg = par("col"), bg = "#FEB24CAA")
 
