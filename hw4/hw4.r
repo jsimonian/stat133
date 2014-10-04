@@ -147,9 +147,7 @@ tryCatch(checkEquals(mean.by.level.t, meanByLevel(iris), checkNames=F),
 
 stdLevelDiff <- function(data) {
                 # your code here
-                map <- function(c, t, s) {
-                       (c-t)/s
-                }
+                map <- function(c, t, s) {(c-t)/s}
                 byLevel <- meanByLevel(data)
                 names = rownames(byLevel)
                 byLevel <- as.data.frame(byLevel)
