@@ -1,6 +1,6 @@
 library(RUnit)
 errMsg = function(err) print(paste("ERROR:", err))
-load('hw4-tests.rda') 
+load('hw4-tests.rda')
 
 # Implement the function "truncate", a function that trims a given vector by
 # removing the upper and lower specified quantiles. Your function should take
@@ -16,12 +16,12 @@ load('hw4-tests.rda')
 # upper and lower quantiles
 
 truncate <- function(input.vector, trim) {
-
-        stopifnot(0<=trim & trim<=0.5) # this line makes sure trim in [0,0.5]
-
+            stopifnot(0<=trim & trim<=0.5) # this line makes sure trim in [0,0.5]
             # your code here
-
-    }
+            truncated.vector <- input.vector[(input.vector >= quantile(input.vector, p = trim)) & 
+            (input.vector <= quantile(input.vector, p = 1 - trim))]
+            return(truncated.vector)     
+}
 
 tryCatch(checkEquals(c(2, 3, 4), truncate(1:5, trim=0.25)), error=function(err)
                   errMsg(err))
@@ -46,8 +46,11 @@ tryCatch(checkIdentical(integer(0), truncate(1:6, trim=0.5)),
 # second the upper bound
 
 outlierCutoff <- function(data) {
-        # your code here
-
+                 # your code here
+                 outlier.cutoffs <- apply(data, 2, function(x) 
+                 c((median(x) - 1.5*(as.vector(quantile(x, 0.75)) - as.vector(quantile(x, 0.25)))), 
+                 (median(x) + 1.5*(as.vector(quantile(x, 0.75)) - as.vector(quantile(x, 0.25))))))
+                 return(outlier.cutoffs)
 }
 
 tryCatch(checkIdentical(outlier.cutoff.t, outlierCutoff(ex1.test)),
@@ -74,11 +77,17 @@ tryCatch(checkIdentical(outlier.cutoff.t, outlierCutoff(ex1.test)),
 #   been removed.
 
 removeOutliers <- function(data, max.outlier.rate) {
-
-        stopifnot(max.outlier.rate>=0 & max.outlier.rate<=1)
-
-            # your code here
-    }
+                  stopifnot(max.outlier.rate>=0 & max.outlier.rate<=1)
+                  # your code here
+                  outlier.variables <- (apply(data, 2, function(x) 
+                  x <= (median(x) - 1.5*(as.vector(quantile(x, 0.75)) - as.vector(quantile(x, 0.25)))) | 
+                  x >= (median(x) + 1.5*(as.vector(quantile(x, 0.75)) - as.vector(quantile(x, 0.25))))))
+                  outlier.rate <- apply(outlier.variables, 1, function(x) (sum(x)/5))
+                  data$outlier.rate <- outlier.rate
+                  subset.data.0 <- subset(data, data$outlier.rate <= max.outlier.rate)
+                  subset.data <- subset(subset.data.0, select = -c(outlier.rate))
+                  return(subset.data)
+}
 
 tryCatch(checkEquals(remove.outlier.t, removeOutliers(ex1.test, 0.25), ),
                   error=function(err) errMsg(err))
@@ -102,11 +111,17 @@ tryCatch(checkEquals(remove.outlier.t, removeOutliers(ex1.test, 0.25), ),
 #   matrix.
 
 meanByLevel <- function(data) {
-
-        # your code here
+               # your code here
+               nums <- sapply(data, is.numeric)
+               agg.0 <- aggregate(data[,nums],
+               list(myGroupName = data[, !nums]), mean)
+               row.names(agg.0) <- agg.0$myGroupName
+               agg <- subset(agg.0, select = -c(myGroupName))
+               levels.means <- as.matrix(agg)
+               return(levels.means)
 }
 
-tryCatch(checkIdentical(mean.by.level.t, meanByLevel(iris), checkNames=F),
+tryCatch(checkEquals(mean.by.level.t, meanByLevel(iris), checkNames=F),
          error=function(err) errMsg(err))
 
 
@@ -131,8 +146,17 @@ tryCatch(checkIdentical(mean.by.level.t, meanByLevel(iris), checkNames=F),
 #   dimensions of your return value are correct.
 
 stdLevelDiff <- function(data) {
-
-        # your code here
+                # your code here
+                nums <- sapply(data, is.numeric)
+                agg.0 <- aggregate(data[,nums],
+                list(myGroupName = data[, !nums]), mean)
+                row.names(agg.0) <- agg.0$myGroupName
+                agg <- subset(agg.0, select = -c(myGroupName))
+                #return(agg)
+                overall <- apply(data[,nums], 2, function(x) mean(x))
+                #return(overall)
+                level.diff <- 
+                #level.diff <- agg - overall
 }
 
 tryCatch(checkIdentical(std.level.diff.t, abs(stdLevelDiff(iris)), checkNames=F),
@@ -158,8 +182,10 @@ tryCatch(checkIdentical(std.level.diff.t, abs(stdLevelDiff(iris)), checkNames=F)
 #   variance given by <var> and mean given by the jth entry of <means>.
 
 simpleNormSim <- function(means, sim.size=50, var=1) {
-
-        # your code here
+                 # your code here
+                 means <- as.list(means)
+                 simulation <- lapply(means, function(x) x <- rnorm(sim.size, x, sqrt(var)))
+                 return(simulation)
 }
 
 set.seed(47)
