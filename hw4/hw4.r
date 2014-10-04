@@ -147,19 +147,36 @@ tryCatch(checkEquals(mean.by.level.t, meanByLevel(iris), checkNames=F),
 
 stdLevelDiff <- function(data) {
                 # your code here
-                nums <- sapply(data, is.numeric)
-                agg.0 <- aggregate(data[,nums],
-                list(myGroupName = data[, !nums]), mean)
-                row.names(agg.0) <- agg.0$myGroupName
-                agg <- subset(agg.0, select = -c(myGroupName))
-                #return(agg)
-                overall <- apply(data[,nums], 2, function(x) mean(x))
-                #return(overall)
-                level.diff <- 
-                #level.diff <- agg - overall
+                map <- function(c, t, s) {
+                       (c-t)/s
+                }
+                byLevel <- meanByLevel(data)
+                names = rownames(byLevel)
+                byLevel <- as.data.frame(byLevel)
+                nums <- data[, sapply(data, is.numeric)]
+                total <- sapply(nums, mean)
+                std <- sapply(nums, sd)
+                rez <- mapply(map, byLevel, total, std)
+                rownames(rez) <- names
+                levels.diff <- rez
+                return(levels.diff)
 }
+  
+  
+  
+#                nums <- sapply(data, is.numeric)
+#                agg.0 <- aggregate(data[,nums],
+ #               list(myGroupName = data[, !nums]), mean)
+  #              row.names(agg.0) <- agg.0$myGroupName
+   #             agg <- subset(agg.0, select = -c(myGroupName))
+    #            #return(agg)
+     #           overall <- apply(data[,nums], 2, function(x) mean(x))
+      #          #return(overall)
+       #         level.diff <- 
+        #        #level.diff <- agg - overall
+#}
 
-tryCatch(checkIdentical(std.level.diff.t, abs(stdLevelDiff(iris)), checkNames=F),
+tryCatch(checkEquals(std.level.diff.t, abs(stdLevelDiff(iris)), checkNames=F),
                   error=function(err) errMsg(err))
 
 
