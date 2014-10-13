@@ -2,13 +2,14 @@
 # directory. This dataset includes information on mothers and the children born
 # to those mothers. You will need this data to perform the tasks for this quiz.
 
+load('KaiserBabies.rda')
 
 # calculate the mean and standard deviation of birthweights (bwt) for all
 # observations in the dataset. Store these as the variables <mean.bwt> and
 # <sd.bwt> respectively.
 
-# mean.bwt <- your code here
-# sd.bwt <- your code here
+mean.bwt <- mean(infants$bwt)
+sd.bwt <- sd(infants$bwt)
 
 
 
@@ -17,8 +18,7 @@
 # this should be a numeric vector whose length is equal to the number of
 # observations in the dataset.
 
-# std.bwts <- your code here
-
+std.bwts <- (infants$bwt - mean.bwt)/sd.bwt
 
 
 # Create the following two subsets and store them as variables with the
@@ -26,16 +26,16 @@
 # 1) Mothers whose smoking status is never: <subset.nonsmoke>
 # 2) Mothers whose smoking status is now: <subset.smoke>
 
-# subset.nonsmoke <- your code here
-# subset.smoke <- your code here
+subset.nonsmoke <- infants[infants$smoke == 'Never',]
+subset.smoke <- infants[infants$smoke == 'Now', ]
 
 
 
 # For each of your subsets, create a vector giving the age of the mother. Store
 # these as variables <subset.nonsmoke.age> and <subset.smoke.age>.
 
-# subset.smoke.age <- your code here
-# subset.nonsmoke.age <- your code here
+subset.smoke.age <- subset.smoke$age
+subset.nonsmoke.age <- subset.nonsmoke$age
 
 
 
@@ -51,9 +51,9 @@
 # whose value in <ages> is strictly less that <age.cutoff>.
 
 gestByAge <- function(age.cutoff, ages, gestation){
-
-    # your code here
-
+             # your code here
+             test.subset <- gestation[ages < age.cutoff]
+             return(mean(test.subset, na.rm = T))
 }
 
 
@@ -62,4 +62,4 @@ gestByAge <- function(age.cutoff, ages, gestation){
 # 1) the title: "Birthweight v gestation"
 # 2) points of mothers whose smoking status is never should be colored red
 
-
+plot(infants$gestation, infants$bwt, type = 'p', main = 'Birthweight v gestation', xlab = 'Gestation', ylab = 'Birthweight')
