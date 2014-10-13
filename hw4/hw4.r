@@ -82,10 +82,8 @@ removeOutliers <- function(data, max.outlier.rate) {
                   outlier.variables <- (apply(data, 2, function(x) 
                   x <= (median(x) - 1.5*(as.vector(quantile(x, 0.75)) - as.vector(quantile(x, 0.25)))) | 
                   x >= (median(x) + 1.5*(as.vector(quantile(x, 0.75)) - as.vector(quantile(x, 0.25))))))
-                  outlier.rate <- apply(outlier.variables, 1, function(x) (sum(x)/5))
-                  data$outlier.rate <- outlier.rate
-                  subset.data.0 <- subset(data, data$outlier.rate <= max.outlier.rate)
-                  subset.data <- subset(subset.data.0, select = -c(outlier.rate))
+                  outlier.rate <- apply(outlier.variables, 1, function(x) (sum(x)/(ncol(data))))
+                  subset.data <- data[outlier.rate <= max.outlier.rate, ]
                   return(subset.data)
 }
 
