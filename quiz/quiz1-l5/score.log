@@ -1,0 +1,17 @@
+INFO:root:Executed R('load(\'../../instructor/assignments/quiz/quiz1-l5/quiz1-l5-tests.rda\')')
+INFO:root:(1 points) R('all.equal(mean.bwt, test$var1)')[0] is True
+INFO:root:(1 points) R('all.equal(sd.bwt, test$var2)')[0] is True
+INFO:root:(1 points) R('all.equal(std.bwts, test$app)')[0] is True
+INFO:root:(1 points) R('all.equal(subset.nonsmoke, test$sub1)')[0] is True
+INFO:root:(1 points) R('all.equal(subset.smoke, test$sub2)')[0] is True
+INFO:root:(1 points) R('all.equal(subset.smoke.age, test$sub3)')[0] is True
+INFO:root:(1 points) R('all.equal(subset.nonsmoke.age, test$sub4)')[0] is True
+INFO:root:Executed R('fun.output <- gestByAge(test$fun1, test$fun2, test$fun3)')
+INFO:root:(2 points) R('all.equal(fun.output, test$fun.out)')[0] is True
+INFO:root:(1 points) correct plot'? is y
+INFO:root:(1 points) Is there a title'? is y
+ERROR:root:(1 points) Checking non-smokers red
+ERROR:root:... Expecting: False
+ERROR:root:... But got:   n
+INFO:root:(1 points) smokers another color? is y
+INFO:root:You got a 12 out of 13.
