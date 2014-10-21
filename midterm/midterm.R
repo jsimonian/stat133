@@ -71,13 +71,13 @@ max.rain = lapply(rain, max)
 
 ## Plot a boxplot that shows the distribution of rainfall at each station
 ## (hint: there should be 5 "boxes" in the boxplot)
-boxplot(rain)
+boxplot(rain, main = "Boxplots of rainfall at each station")
 
 ## Make a scatterplot that shows the rainfall at station 1 in year 2000.
 ## Precipitation should go on the y-axis and day on the x-axis
 ## Make new labels for the x- and y-axis.
 ## Hint: the date information is stored in the object day.
-plot(rain$st050183[day$st050183 < 2001 & day$st050183 >= 2000], xlab = "day", ylab = "rainfall")
+plot(rain$st050183[day$st050183 < 2001 & day$st050183 >= 2000], xlab = "date", ylab = "rainfall", main = "Station 1 Rainfall by day in the year 2000")
 
 
 ########################################### THIRD PART
@@ -93,11 +93,11 @@ fit <- lm(bwt ~ gestation, data=infants)
 ## Do a scatterplot of birthweight (on y-axis) vs. gestation (on x-axis)
 ## Add to the plot the line estimated in fit (hint: find the coefficients)
 ## Plot the line in red and put your own x- and y-axis labels on the plot.
-plot(infants$gestation, infants$bw, xlab = "gestation", ylab = "birthweight")
+plot(infants$gestation, infants$bw, xlab = "gestation", ylab = "birthweight", main = "Birthweight vs. Gestation of Infants")
 abline(-10.0642, 0.4643, col = 'red')
 
 ## Plot a histogram of the fathers' heights (varible dht in the data frame).
-hist(infants$dht, xlab = "father's height")
+hist(infants$dht, xlab = "father's height", main = "Histogram of Father's Heights")
 
 ## Create a table which tallies the education level of mothers (varible ed in the data frame)
 ## against the education level of the fathers (variable ded in the data frame)
