@@ -13,7 +13,7 @@
 #### But I figured I should show that I know how. So here's an example. I commented
 #### it out so that you wouldn't have random data being put onto your computer.
 
-#saveRDS(result.matrix, "1.RData")
+#saveRDS(result.matrix.1, "1.RData")
 #res.1 <- load("1.RData")
 
 #### All that being said, here are the matriciesof data that I generated to get my results.
