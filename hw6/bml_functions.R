@@ -41,16 +41,17 @@ bml.sim <- function(r, c, p){
   trial = 0
   locked = F
   mat <- bml.init(r, c, p)
+  if(sum(mat) == 0) return(list(mat, 'matrix is empty', 0, NA))
   while(locked == F) {
     #image(t(apply(mat, 2, rev)), col = c('white','red','blue'))
-    if(trial == 1000) return(list(mat, '1000 trials conducted, gridlock not reached'))
+    if(trial == 1000) return(list(mat, '1000 trials conducted, gridlock not reached', 0, NA))
     output = bml.step(mat)
     mat = output[[1]]
     locked = !output[[2]]
     trial = trial + 1
     #print(trial)
   }
-  return(list(mat, sprintf("Number of trials before gridlock: %s", trial)))
+  return(list(mat, sprintf("Number of trials before gridlock: %s", trial), 1, trial))
 }
 
 # (replicate function here - check lots of bml cases)
@@ -88,6 +89,7 @@ bml.sim <- function(r, c, p){
 #   trial = 0
 #   locked = F
 #   mat <- bml.init(r, c, p)
+#   if(sum(mat) == 0) return(list(mat, 'matrix is empty', 0))
 #   original <- list(0)
 #   original[[1]] <- mat
 #   while(locked == F) {
@@ -97,9 +99,9 @@ bml.sim <- function(r, c, p){
 #     locked = !output[[2]]     
 #     trial = trial + 1
 #     if(locked == F && list(mat) %in% original) 
-#       return(list(mat, 'Reached earlier iteration: gridlock will never occur'))
+#       return(list(mat, 'Reached earlier iteration: gridlock will never occur'), 0)
 #     original[[(trial+1)]] = mat
 #     print(trial)
 #   }
-#   return(list(mat, sprintf("Number of trials before gridlock: %s", trial)))
+#   return(list(mat, sprintf("Number of trials before gridlock: %s", trial), 1))
 # }
