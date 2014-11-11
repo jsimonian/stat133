@@ -16,7 +16,7 @@
 #saveRDS(result.matrix.1, "1.RData")
 #res.1 <- load("1.RData")
 
-#### All that being said, here are the matriciesof data that I generated to get my results.
+#### All that being said, here are the matricies of data that I generated to get my results.
 
 result.matrix.1 <- matrix(replicate(10, sapply(c(1:100), function (x) bml.sim(10, 10, x/100)[[3]])), 100, 10)
 plot(c(1:100)/100, 10*apply(result.matrix.1, 1, sum), type = "l", xlab = "Density", ylab = "Percent of grids reaching lockup", main = "Density vs Chance of Gridlock")
