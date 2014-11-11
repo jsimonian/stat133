@@ -21,13 +21,23 @@ bml.init <- function(r, c, p){
 ## you can write extra functions that do just a step north or just a step east.
 
 bml.step <- function(m) {
-  left = matrix(c(m[,(2:ncol(m))], m[,1]), nrow(m), ncol(m))
-  right = matrix(c(m[,ncol(m)], m[,(1:ncol(m)-1)]), nrow(m), ncol(m))
-  m.new1 = matrix(0, nrow(m), ncol(m)) + (m == 1 & left != 0) + (right == 1 & m == 0)
-  down = matrix(c(m[nrow(m),], t(m[(1:nrow(m)-1),])), nrow(m), ncol(m), byrow = T)
-  up = matrix(c(t(m[(2:nrow(m)),]), m[1,]), nrow(m), ncol(m), byrow = T)
-  down.new = matrix(c(m.new1[nrow(m),], t(m.new1[(1:nrow(m)-1),])), nrow(m), ncol(m), byrow = T)
-  m.new2 = m.new1 + 2*((m == 2 & (down == 2 | down.new != 0)) + (up == 2 & m != 2 & m.new1 == 0))
+  if(ncol(m) != 1) {
+    left = matrix(c(m[,(2:ncol(m))], m[,1]), nrow(m), ncol(m))
+    right = matrix(c(m[,ncol(m)], m[,(1:ncol(m)-1)]), nrow(m), ncol(m))
+    m.new1 = matrix(0, nrow(m), ncol(m)) + (m == 1 & left != 0) + (right == 1 & m == 0)
+  }
+  if(ncol(m) == 1) {
+    m.new1 = matrix(0, nrow(m), ncol(m)) + m == 1
+  }
+  if(nrow(m) != 1) {
+    down = matrix(c(m[nrow(m),], t(m[(1:nrow(m)-1),])), nrow(m), ncol(m), byrow = T)
+    up = matrix(c(t(m[(2:nrow(m)),]), m[1,]), nrow(m), ncol(m), byrow = T)
+    down.new = matrix(c(m.new1[nrow(m),], t(m.new1[(1:nrow(m)-1),])), nrow(m), ncol(m), byrow = T)
+    m.new2 = m.new1 + 2*((m == 2 & (down == 2 | down.new != 0)) + (up == 2 & m != 2 & m.new1 == 0))
+  }
+  if(nrow(m) == 1) {
+    m.new2 = m.new1 + 2*(m == 2)
+  }
   grid.new <- !isTRUE(all.equal(m, m.new2))
   m <- m.new2
   return(list(m, grid.new))

@@ -9,12 +9,12 @@
 
 ### These all take a very long time to run.
 
-result.matrix <- matrix(replicate(10, sapply(c(1:100), function (x) bml.sim(10, 10, x/100)[[3]])), 100, 10)
-plot(c(1:100)/100, 10*apply(result.matrix, 1, sum), type = "l", xlab = "Density", ylab = "Percent of grids reaching lockup", main = "Density vs Chance of Lockup")
+result.matrix.1 <- matrix(replicate(10, sapply(c(1:100), function (x) bml.sim(10, 10, x/100)[[3]])), 100, 10)
+plot(c(1:100)/100, 10*apply(result.matrix.1, 1, sum), type = "l", xlab = "Density", ylab = "Percent of grids reaching lockup", main = "Density vs Chance of Gridlock")
 
 result.matrix.2 <- matrix(replicate(10, sapply(c(1:100), function (x) bml.sim(10, 10, x/100)[[4]])), 100, 10)
-plot(c(1:100)/100, apply(result.matrix.2, 1, mean), type = "l", xlab = "Density", ylab = "Average steps before lockup", main = "Density vs Steps Taken Before Lockup")
+plot(c(1:100)/100, apply(result.matrix.2, 1, mean, na.rm = T), type = "l", xlab = "Density", ylab = "Average steps before lockup", main = "Density vs Steps Taken Before Gridlock")
 
-result.matrix.3 <- matrix(replicate(5, sapply(c(1:100), function (x) bml.sim(x, x, 0.5)[[3]])), 100, 5)
-plot(c(1:100), 20*apply(result.matrix.3, 1, sum), type = "l", xlab = "Matrix size", ylab = "Percent of grids reaching lockup", main = "Matrix Size vs Chance of Lockup")
+result.matrix.3 <- matrix(replicate(10, sapply(c(5:50), function (x) bml.sim(x, x, 0.5)[[3]])), 46, 10)
+plot(c(5:50), 10*apply(result.matrix.3, 1, sum), type = "l", xlab = "Matrix size", ylab = "Percent of grids reaching lockup", main = "Matrix Size vs Chance of Gridlock")
 
