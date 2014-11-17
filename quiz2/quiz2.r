@@ -9,7 +9,8 @@
 # Output: <num>: a Poisson(k) random variable (a single number)
 
 num_students <- function(k) {
-  # your code here
+  num <- rpois(1, k)
+  return(num)
 }
 
 # Assume all students arrive at different times.
@@ -27,7 +28,8 @@ num_students <- function(k) {
 # random variables (a vector of length num)
 
 interarrival_times <- function(num) {
-  # your code here
+  inter <- rexp(num, rate = 1/8)
+  return(inter)
 }
 
 # For student i, it takes Z_i minutes for Johnny to answer questions.
@@ -42,7 +44,8 @@ interarrival_times <- function(num) {
 # random variables (a vector of length num)
 
 service_times <- function(num) {
-  # your code here
+  serv <- rexp(num, rate = 1/10)
+  return(serv)
 }
 
 # Compute the waiting time for each student.
@@ -66,7 +69,13 @@ service_times <- function(num) {
 # <wait>: a vector that contains the waiting time for each student
 
 waiting_times <- function(inter, serv){
-  # your code here
+  wait = c(0)
+  wait[1] = 0
+  for(i in 2:length(inter)) {
+    wait[i] = serv[i-1] + wait[i-1] - inter[i]
+    if(wait[i] < 0) wait[i] = 0
+  }
+  return(unlist(wait))
 }
 
 # Simulation
@@ -81,17 +90,21 @@ waiting_times <- function(inter, serv){
 #   total: total times spent in Johnny's OH (serv + wait)
 
 queueing_sim <- function(k) {
-  # your code here
+  inter = interarrival_times(k)
+  serv = service_times(k)
+  wait = waiting_times(inter, serv)
+  total = serv + wait
+  sim = data.frame(inter, serv, wait, total)
+  return(sim)
 }
 
 set.seed(1234)
+
 # Run the simulation 500 times with k = 16. 
 # Save the output in a variable called sim500.
 # sim500 is a list of 500 data frames.
-# sim500 <- your code here
 
-
-
+sim500 <- replicate(500, queueing_sim(16), s=F)
 
 # For each simulation, compute the average waiting time and
 # the average total time spent in OH.
@@ -99,8 +112,16 @@ set.seed(1234)
 # avg_wait_total is a 2x500 matrix (without any row names or column names).
 # avg_wait_total <- your code here
 
+wait = c(0)
+for(i in 1:500){
+  wait[i] = sum(sim500[[i]]$wait)
+}
+total = c(0)
+for(i in 1:500){
+  total[i] = sum(sim500[[i]]$total)
+}
 
-
+avg_wait_total <- matrix(c(wait, total), 500, 2)
 
 #-----------------------------------------------------------------------
 # Suppose Johnny is not feeling well and he needs to take a break of 
@@ -126,7 +147,10 @@ set.seed(1234)
 # <br_times>: a numeric vector of break times
 
 break_times <- function(n){
-  # your code here
+  breaks <- rnorm(n, 5, 2)
+  breaks[breaks < 0] <- 0
+  br_times <- breaks
+  return(br_times)
 }
 
 # Write a function called serv_wait_sick that computes
