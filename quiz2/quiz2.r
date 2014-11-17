@@ -121,7 +121,7 @@ for(i in 1:500){
   total[i] = sum(sim500[[i]]$total)
 }
 
-avg_wait_total <- matrix(c(wait, total), 500, 2)
+avg_wait_total <- matrix(c(wait, total), 2, 500, byrow = T)
 
 #-----------------------------------------------------------------------
 # Suppose Johnny is not feeling well and he needs to take a break of 
