@@ -2,6 +2,8 @@
 # Number of Problems: 6
 # The quiz is out of 22 points.
 
+here = T
+
 # Function 1 (3 points)
 # Write a function called numAtElements. Your function should take the following
 # arguments
@@ -11,9 +13,10 @@
 # and return the following
 #   <num.at>: an integer indicating how many elements of <chvec> contain the "@"
 #     symbol. For example: numAtElements(c('karl', 'k@rl', '@@@')) should return 2
+
 numAtElements <- function(chvec){
-  
-  # your code here
+  num.at <- length(grep("@", chvec))
+  return(num.at)
 }
 
 # Function 2 (3 points)
@@ -24,9 +27,10 @@ numAtElements <- function(chvec){
 # and return the following
 #   <newstring>: a character vector of length 1 where all ! symbols have been
 #     replaced by . symbols
+
 unexclaim <- function(chstring) {
-  
-  # your code here
+  newstring <- gsub("!", ".", chstring)
+  return(newstring)
 }
 
 # Function 3 (3 points)
@@ -42,8 +46,9 @@ unexclaim <- function(chstring) {
 #     updated. For example updateDate(c('May, 2010', 'June, 2011'), '2010') should
 #     return 'May, 2015'.
 updateDate <- function(dates, old.yr) {
-  
-  # your code here
+  old.yr.only <- grep(old.yr, dates, value = T)
+  updated.dates <- gsub(old.yr, 2015, old.yr.only)
+  return(updated.dates)
 }
 
 # Function 4 (4 points)
@@ -59,8 +64,12 @@ updateDate <- function(dates, old.yr) {
 #                    cat dog
 #                     3   1
 countcatdog<- function(chvec){
-  
-  # your code here
+  lowcase <- tolower(chvec)
+  numcat <- (nchar(lowcase) - nchar(gsub('cat', '', lowcase)))/3
+  numdog <- (nchar(lowcase) - nchar(gsub('dog', '', lowcase)))/3
+  counts <- c(numcat, numdog)
+  names(counts) <- c('cat', 'dog')
+  return(counts)
 }
 
 # Function 5 (3 points)
@@ -72,8 +81,10 @@ countcatdog<- function(chvec){
 # and return the following
 #   <total>: A single number (the sum of all the digits in chvec)
 sumDigits <- function(chvec){
-
-  # your code here
+  digits <- gsub("[^0-9]","", chvec)
+  sep.digits <- as.numeric(strsplit(digits, "")[[1]])
+  total <- sum(sep.digits)
+  return(total)
 }
 
 # Some test cases:
@@ -108,8 +119,14 @@ sumDigits <- function(chvec){
 #   <DNA_final>: A character vector of two DNAs
 
 dnaTransform <- function(DNA.vec){
-    
-  # your code here
+  strings <- grep("ATTA", DNA.vec, value = T)[1:2]
+  if(sum(nchar(strings)) != 20) {return(DNA.vec[1:2])}
+  DNA1 <- c(substring(strings[1], 1, 5), substring(strings[1], 6))
+  DNA2 <- c(substring(strings[2], 1, 5), substring(strings[2], 6))
+  st1 <- paste0(DNA1[1], DNA2[2])
+  st2 <- paste0(DNA2[1], DNA1[2])
+  DNA_final <- c(st1, st2)
+  return(DNA_final)
 }
 
 # Some test cases:
