@@ -159,6 +159,19 @@
                     "earned": 8
                 }
             }
+        }, 
+        "quiz3": {
+            "note": "", 
+            "hash": "d92f85ff7861cdb8a1d297904618738d6ac9f1a5", 
+            "earned": 22, 
+            "possible": 22, 
+            "penalty": 0, 
+            "parts": {
+                "quiz3": {
+                    "possible": 22, 
+                    "earned": 22
+                }
+            }
         }
     }, 
     "section": "lab5"
